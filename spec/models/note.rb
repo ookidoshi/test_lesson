@@ -24,6 +24,20 @@ describe '正常系の機能' do
 
         # [Point.3-3-3]テストデータを保存します。
         enquete.save
+
+        # [Point.3-3-4][Point.3-3-3]で保存したデータを取得します。
+        answered_enquete = FoodEnquete.find(1);
+
+        # [Point.3-3-5][Point.3-3-1]で作成したデータを同一か検証します。
+        expect(answered_enquete.name).to eq('田中 太郎')
+        expect(answered_enquete.mail).to eq('taro.tanaka@example.com')
+        expect(answered_enquete.age).to eq(25)
+        expect(answered_enquete.food_id).to eq(2)
+        expect(answered_enquete.scored).to eq(3)
+        expect(answered_enquete.request).to eq('おいしかったです。')
+        expect(answered_enquete.present_id).to eq(1)
     end
   end
 end
+
+
