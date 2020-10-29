@@ -134,7 +134,18 @@ it '異なるメールアドレスで各回答できること' do
   expect(FoodEnquete.all.size).to eq 2
 end
 
-
+describe 'メールアドレスの形式' do
+  context '不正なメールアドレスの場合' do
+    it 'エラーになること' do
+      new_enquete = FoodEnquete.new
+      #不正な形式のメールアドレスを入力します
+      new_enquete.mail = "taro.tanaka"
+      expect(new_enquete).not_to be_valid
+      #不正な形式のメッセージが含まれることを検証します
+      expect(new_enquete.errors[:mail]).to include(I18n.t('errors.messages.invalid'))
+    end
+  end
+end
 
 
 
