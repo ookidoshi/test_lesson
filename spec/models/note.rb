@@ -81,7 +81,19 @@ describe '正常系の機能' do
     end
   end
 
-
+  describe '#adult?' do
+  it '20歳未満は成人ではないこと' do
+    foodEnquete = FoodEnquete.new
+    # [Point.3-5-1]未成年になることを検証します。
+    expect(foodEnquete.send(:adult?, 19)).to be_falsey
+  end
+  
+  it '20歳以上は成人であること' do
+    foodEnquete = FoodEnquete.new
+    # [Point.3-5-2]成人になることを検証します。
+    expect(foodEnquete.send(:adult?, 20)).to be_truthy
+  end
+end
 
 
 

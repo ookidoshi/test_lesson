@@ -72,5 +72,18 @@ RSpec.describe FoodEnquete, type: :model do
         expect(new_enquete.errors[:request]).not_to include(I18n.t('errors.messages.blank'))
       end
     end
-end
+  end
+    describe '#adult?' do
+      it '20歳未満は成人でないこと' do
+        foodEnquete = FoodEnquete.new
+        #未成年になることを検証します
+        expect(foodEnquete.send(:adult?, 19)).to be_falsey
+      end
+
+      it '20歳以上は成人であること' do
+        foodEnquete = FoodEnquete.new
+        #成人になることを検証します。
+        expect(foodEnquete.send(:adult?,20)).to be_truthy
+      end
+    end
 end
