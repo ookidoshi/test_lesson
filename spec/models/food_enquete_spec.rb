@@ -106,6 +106,42 @@ RSpec.describe FoodEnquete, type: :model do
       expect(FoodEnquete.all.size).to eq 1
     end
   end
+it '異なるメールアドレスで各回答できること' do
+  enquete_tanaka = FoodEnquete.new(
+    name: '田中 太郎',
+    mail: 'taro.tanaka@example.com',
+    age: 25,
+    food_id: 2,
+    score: 3,
+    request: 'おいしかったです。',
+    present_id: 1
+  )
+  enquete_tanaka.save
+
+  enquete_yamada = FoodEnquete.new(
+    name: '山田 次郎',
+    mail: 'jiro.yamada@example.com',
+    age: 22,
+    food_id: 1,
+    score: 2,
+    request: '',
+    present_id: 0
+  )
+  
+  expect(enquete_yamada).to be_valid
+  enquete_yamada.save
+  #問題なく登録できます
+  expect(FoodEnquete.all.size).to eq 2
+end
+
+
+
+
+
+
+
+
+
 
 describe 'アンケート回答時の条件' do
   context '年齢を確認すること' do

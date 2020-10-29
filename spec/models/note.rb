@@ -63,6 +63,40 @@ RSpec.describe FoodEnquete, type: :model do
         end
       end
 
+      it '異なるメールアドレスで回答できること' do
+        enquete_tanaka = FoodEnquete.new(
+          name: '田中 太郎',
+          mail: 'taro.tanaka@example.com',
+          age: 25,
+          food_id: 2,
+          score: 3,
+          request: 'おいしかったです。',
+          present_id: 1
+        )
+        enquete_tanaka.save
+  
+        enquete_yamada = FoodEnquete.new(
+          name: '山田 次郎',
+          mail: 'jiro.yamada@example.com',
+          age: 22,
+          food_id: 1,
+          score: 2,
+          request: '',
+          present_id: 0
+        )
+  
+        expect(enquete_yamada).to be_valid
+        enquete_yamada.save
+        # [Point.3-6-4]問題なく登録できます。
+        expect(FoodEnquete.all.size).to eq 2
+      end
+
+
+
+
+
+
+
     context '年齢を確認すること' do
       it '未成年はビール飲み放題を選択できないこと' do
         enquete_sato = FactoryBot.build(:food_enquete_sato)
