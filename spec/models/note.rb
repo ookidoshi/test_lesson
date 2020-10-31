@@ -48,6 +48,7 @@ RSpec.describe FoodEnquete, type: :model do
     context '年齢を確認すること' do
       it '未成年はビール飲み放題を選択できないこと' do
         enquete_sato = FactoryBot.build(:food_enquete_sato)
+  
         expect(enquete_sato).not_to be_valid
         expect(enquete_sato.errors[:present_id]).to include(I18n.t('activerecord.errors.models.food_enquete.attributes.present_id.cannot_present_to_minor'))
       end
@@ -83,3 +84,4 @@ RSpec.describe FoodEnquete, type: :model do
     it_behaves_like '満足度の表示'
   end
 end
+
