@@ -1,42 +1,24 @@
-describe '入力項目の有無' do
-  # ==========ここから追加する==========
-  # [Point.3-11-2]インスタンスを共通化してテストデータを作成します。
-  let(:new_enquete) { FoodEnquete.new }
+require 'rails_helper'
+
+RSpec.describe "FoodEnquetes", type: :request do
+
+  describe '正常' do
+    context "アンケートに回答する" do
+      it "回答できること" do
+        # [Point.3-15-1]アンケートページにアクセスします。
+        get "/food_enquetes/new"
+        # [Point.3-15-2]正常に応答することを確認します。
+        expect(response).to have_http_status(200)
+  
+        # [Point.3-15-3]正常な入力値を送信します。
+        post "/food_enquetes", params: { food_enquete: FactoryBot.attributes_for(:food_enquete_tanaka) }
+        # [Point.3-15-4]リダイレクト先に移動します。
+        follow_redirect!
+        # [Point.3-15-5]送信完了のメッセージが含まれることを検証します。
+        expect(response.body).to include "お食事に関するアンケートを送信しました"
+      end
+    end
+  end
   # ==========ここまで追加する==========
 
-  context '必須入力であること' do
-    it 'お名前が必須であること' do
-      # ==========ここから削除する==========
-      # new_enquete = FoodEnquete.new
-      # ==========ここまで削除する==========
-      expect(new_enquete).not_to be_valid
-      expect(new_enquete.errors[:name]).to include(I18n.t('errors.messages.blank'))
-    end
-
-    it 'メールアドレスが必須であること' do
-      # ==========ここから削除する==========
-      # new_enquete = FoodEnquete.new
-      # ==========ここまで削除する==========
-      expect(new_enquete).not_to be_valid
-      expect(new_enquete.errors[:mail]).to include(I18n.t('errors.messages.blank'))
-    end
-
-    it '登録できないこと' do
-      # ==========ここから削除する==========
-      # new_enquete = FoodEnquete.new
-      # ==========ここまで削除する==========
-
-      expect(new_enquete.save).to be_falsey
-    end
-  end
-
-  context '任意入力であること' do
-    it 'ご意見・ご要望が任意であること' do
-      # ==========ここから削除する==========
-      # new_enquete = FoodEnquete.new
-      # ==========ここまで削除する==========
-      expect(new_enquete).not_to be_valid
-      expect(new_enquete.errors[:request]).not_to include(I18n.t('errors.messages.blank'))
-    end
-  end
 end
